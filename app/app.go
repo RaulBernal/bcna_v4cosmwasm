@@ -76,8 +76,6 @@ import (
 	ibckeeper "github.com/cosmos/ibc-go/v8/modules/core/keeper"
 
 	burnmodulekeeper "github.com/BitCannaGlobal/bcna/x/burn/keeper"
-	wasmkeeper "github.com/CosmWasm/wasmd/x/wasm/keeper"
-	tmproto "github.com/cometbft/cometbft/proto/tendermint/types"
 
 	// this line is used by starport scaffolding # stargate/app/moduleImport
 
@@ -145,9 +143,9 @@ type App struct {
 
 	BurnKeeper burnmodulekeeper.Keeper
 
-	// CosmWasm
-	WasmKeeper       wasmkeeper.Keeper
-	ScopedWasmKeeper capabilitykeeper.ScopedKeeper
+	// // CosmWasm
+	// WasmKeeper       wasmkeeper.Keeper
+	// ScopedWasmKeeper capabilitykeeper.ScopedKeeper
 
 	// this line is used by starport scaffolding # stargate/app/keeperDeclaration
 
@@ -366,8 +364,7 @@ func New(
 		return nil, err
 	}
 
-	return app, app.WasmKeeper.
-		InitializePinnedCodes(app.NewUncachedContext(true, tmproto.Header{}))
+	return app, nil
 
 }
 

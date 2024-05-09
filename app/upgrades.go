@@ -12,8 +12,8 @@ import (
 
 	nft "cosmossdk.io/x/nft"
 	upgradetypes "cosmossdk.io/x/upgrade/types"
-	burnmoduletypes "github.com/BitCannaGlobal/bcna/x/burn/types"
-	wasmtypes "github.com/CosmWasm/wasmd/x/wasm/types"
+	// burnmoduletypes "github.com/BitCannaGlobal/bcna/x/burn/types"
+	// wasmtypes "github.com/CosmWasm/wasmd/x/wasm/types"
 )
 
 // RegisterUpgradeHandlers registers upgrade handlers.
@@ -57,8 +57,8 @@ func (app *App) StickyFingers(_ upgradetypes.Plan) {
 				circuittypes.ModuleName,
 				ibcfeetypes.ModuleName,
 				nft.ModuleName,
-				wasmtypes.ModuleName,
-				burnmoduletypes.ModuleName,
+				// wasmtypes.ModuleName,
+				// burnmoduletypes.ModuleName,
 			},
 		}
 
