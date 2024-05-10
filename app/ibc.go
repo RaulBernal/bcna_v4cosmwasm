@@ -4,8 +4,8 @@ import (
 	"cosmossdk.io/core/appmodule"
 	storetypes "cosmossdk.io/store/types"
 
-	// "github.com/CosmWasm/wasmd/x/wasm"
-	// wasmtypes "github.com/CosmWasm/wasmd/x/wasm/types"
+	"github.com/CosmWasm/wasmd/x/wasm"
+	wasmtypes "github.com/CosmWasm/wasmd/x/wasm/types"
 	cdctypes "github.com/cosmos/cosmos-sdk/codec/types"
 	servertypes "github.com/cosmos/cosmos-sdk/server/types"
 	"github.com/cosmos/cosmos-sdk/types/module"
@@ -161,11 +161,11 @@ func (app *App) registerIBCModules(appOpts servertypes.AppOptions) error {
 		AddRoute(icacontrollertypes.SubModuleName, icaControllerIBCModule).
 		AddRoute(icahosttypes.SubModuleName, icaHostIBCModule)
 
-	// wasmStack, err := app.registerWasmModules(appOpts)
-	// if err != nil {
-	// 	return err
-	// }
-	// ibcRouter.AddRoute(wasmtypes.ModuleName, wasmStack)
+	wasmStack, err := app.registerWasmModules(appOpts)
+	if err != nil {
+		return err
+	}
+	ibcRouter.AddRoute(wasmtypes.ModuleName, wasmStack)
 
 	// this line is used by starport scaffolding # ibc/app/module
 
@@ -204,7 +204,7 @@ func RegisterIBC(registry cdctypes.InterfaceRegistry) map[string]appmodule.AppMo
 		capabilitytypes.ModuleName:  capability.AppModule{},
 		ibctm.ModuleName:            ibctm.AppModule{},
 		solomachine.ModuleName:      solomachine.AppModule{},
-		// wasmtypes.ModuleName:        wasm.AppModule{},
+		wasmtypes.ModuleName:        wasm.AppModule{},
 	}
 
 	for name, m := range modules {

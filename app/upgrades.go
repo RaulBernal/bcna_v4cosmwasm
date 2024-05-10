@@ -7,13 +7,11 @@ import (
 	"github.com/cosmos/cosmos-sdk/types/module"
 
 	storetypes "cosmossdk.io/store/types"
-	circuittypes "cosmossdk.io/x/circuit/types"
-	ibcfeetypes "github.com/cosmos/ibc-go/v8/modules/apps/29-fee/types"
 
-	nft "cosmossdk.io/x/nft"
 	upgradetypes "cosmossdk.io/x/upgrade/types"
+
 	// burnmoduletypes "github.com/BitCannaGlobal/bcna/x/burn/types"
-	// wasmtypes "github.com/CosmWasm/wasmd/x/wasm/types"
+	wasmtypes "github.com/CosmWasm/wasmd/x/wasm/types"
 )
 
 // RegisterUpgradeHandlers registers upgrade handlers.
@@ -27,7 +25,7 @@ func (app App) RegisterUpgradeHandlers() {
 	app.StickyFingers(upgradeInfo)
 }
 func (app *App) StickyFingers(_ upgradetypes.Plan) {
-	planName := "stickyfingers"
+	planName := "stickyfingers-wasm"
 	app.UpgradeKeeper.SetUpgradeHandler(
 		planName,
 		func(ctx context.Context, plan upgradetypes.Plan, fromVM module.VersionMap) (module.VersionMap, error) {
@@ -54,10 +52,10 @@ func (app *App) StickyFingers(_ upgradetypes.Plan) {
 	if upgradeInfo.Name == planName && !app.UpgradeKeeper.IsSkipHeight(upgradeInfo.Height) {
 		storeUpgrades := storetypes.StoreUpgrades{
 			Added: []string{
-				circuittypes.ModuleName,
-				ibcfeetypes.ModuleName,
-				nft.ModuleName,
-				// wasmtypes.ModuleName,
+				// circuittypes.ModuleName,
+				// ibcfeetypes.ModuleName,
+				// nft.ModuleName,
+				wasmtypes.ModuleName,
 				// burnmoduletypes.ModuleName,
 			},
 		}

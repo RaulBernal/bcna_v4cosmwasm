@@ -35,7 +35,7 @@ import (
 	_ "github.com/BitCannaGlobal/bcna/x/burn/module" // import for side-effects
 	burnmoduletypes "github.com/BitCannaGlobal/bcna/x/burn/types"
 
-	// wasmtypes "github.com/CosmWasm/wasmd/x/wasm/types"
+	wasmtypes "github.com/CosmWasm/wasmd/x/wasm/types"
 	"github.com/cosmos/cosmos-sdk/runtime"
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 	vestingtypes "github.com/cosmos/cosmos-sdk/x/auth/vesting/types"
@@ -96,7 +96,7 @@ var (
 		circuittypes.ModuleName,
 		// chain modules
 		burnmoduletypes.ModuleName,
-		// wasmtypes.ModuleName,
+		wasmtypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/initGenesis
 	}
 
@@ -122,7 +122,7 @@ var (
 		ibcfeetypes.ModuleName,
 		// chain modules
 		burnmoduletypes.ModuleName,
-		// wasmtypes.ModuleName,
+		wasmtypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/beginBlockers
 	}
 
@@ -142,7 +142,7 @@ var (
 		ibcfeetypes.ModuleName,
 		// chain modules
 		burnmoduletypes.ModuleName,
-		// wasmtypes.ModuleName,
+		wasmtypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/endBlockers
 	}
 
@@ -164,7 +164,7 @@ var (
 		{Account: ibcfeetypes.ModuleName},
 		{Account: icatypes.ModuleName},
 		{Account: burnmoduletypes.ModuleName, Permissions: []string{authtypes.Burner}},
-		// {Account: wasmtypes.ModuleName, Permissions: []string{authtypes.Burner}},
+		{Account: wasmtypes.ModuleName, Permissions: []string{authtypes.Burner}},
 		// this line is used by starport scaffolding # stargate/app/maccPerms
 	}
 
