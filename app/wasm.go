@@ -2,7 +2,7 @@ package app
 
 import (
 	"fmt"
-	"strings"
+	"path/filepath"
 
 	storetypes "cosmossdk.io/store/types"
 	"github.com/CosmWasm/wasmd/x/wasm"
@@ -25,17 +25,17 @@ import (
 // AllCapabilities returns all capabilities available with the current wasmvm
 // See https://github.com/CosmWasm/cosmwasm/blob/main/docs/CAPABILITIES-BUILT-IN.md
 // This functionality is going to be moved upstream: https://github.com/CosmWasm/wasmvm/issues/425
-func AllCapabilities() []string {
-	return []string{
-		"iterator",
-		"staking",
-		"stargate",
-		"cosmwasm_1_1",
-		"cosmwasm_1_2",
-		"cosmwasm_1_3",
-		"cosmwasm_1_4",
-	}
-}
+// func AllCapabilities() []string {
+// 	return []string{
+// 		"iterator",
+// 		"staking",
+// 		"stargate",
+// 		"cosmwasm_1_1",
+// 		"cosmwasm_1_2",
+// 		"cosmwasm_1_3",
+// 		"cosmwasm_1_4",
+// 	}
+// }
 
 // registerWasmModules register CosmWasm keepers and non dependency inject modules.
 func (app *App) registerWasmModules(
@@ -50,6 +50,7 @@ func (app *App) registerWasmModules(
 	}
 
 	scopedWasmKeeper := app.CapabilityKeeper.ScopeToModule(wasmtypes.ModuleName)
+	wasmDir := filepath.Join(DefaultNodeHome, "wasm")
 
 	wasmConfig, err := wasm.ReadWasmConfig(appOpts)
 	if err != nil {
@@ -58,7 +59,7 @@ func (app *App) registerWasmModules(
 
 	// The last arguments can contain custom message handlers, and custom query handlers,
 	// if we want to allow any custom callbacks
-	availableCapabilities := strings.Join(AllCapabilities(), ",")
+	// deprecated at v0.51 -  availableCapabilities := strings.Join(AllCapabilities(), ",")
 	app.WasmKeeper = wasmkeeper.NewKeeper(
 		app.AppCodec(),
 		runtime.NewKVStoreService(app.GetKey(wasmtypes.StoreKey)),
@@ -73,9 +74,9 @@ func (app *App) registerWasmModules(
 		app.TransferKeeper,
 		app.MsgServiceRouter(),
 		app.GRPCQueryRouter(),
-		DefaultNodeHome,
+		wasmDir,
 		wasmConfig,
-		availableCapabilities,
+		wasmkeeper.BuiltInCapabilities(),
 		authtypes.NewModuleAddress(govtypes.ModuleName).String(),
 		wasmOpts...,
 	)
