@@ -24,8 +24,6 @@ import (
 	"github.com/spf13/viper"
 
 	"github.com/BitCannaGlobal/bcna/app"
-	"github.com/CosmWasm/wasmd/x/wasm"
-	wasmcli "github.com/CosmWasm/wasmd/x/wasm/client/cli"
 )
 
 func initRootCmd(
@@ -51,15 +49,15 @@ func initRootCmd(
 		txCommand(),
 		keys.Commands(),
 	)
-	wasmcli.ExtendUnsafeResetAllCmd(
-		rootCmd,
-	)
+	// wasmcli.ExtendUnsafeResetAllCmd(
+	// 	rootCmd,
+	// )
 
 }
 
 func addModuleInitFlags(startCmd *cobra.Command) {
 	crisis.AddModuleInitFlags(startCmd)
-	wasm.AddModuleInitFlags(startCmd)
+	// wasm.AddModuleInitFlags(startCmd)
 
 }
 

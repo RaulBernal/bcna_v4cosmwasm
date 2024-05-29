@@ -76,6 +76,7 @@ import (
 	ibckeeper "github.com/cosmos/ibc-go/v8/modules/core/keeper"
 
 	burnmodulekeeper "github.com/BitCannaGlobal/bcna/x/burn/keeper"
+	// wasmkeeper "github.com/CosmWasm/wasmd/x/wasm/keeper"
 
 	// this line is used by starport scaffolding # stargate/app/moduleImport
 
@@ -364,8 +365,9 @@ func New(
 		return nil, err
 	}
 
+	// return app, app.WasmKeeper.
+	// 	InitializePinnedCodes(app.NewUncachedContext(true, tmproto.Header{}))
 	return app, nil
-
 }
 
 // LegacyAmino returns App's amino codec.
